@@ -8,12 +8,21 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.38/57f8f5e02e92a30fd21b80cbd426a4172b5f8e29/lombok-1.18.38.jar" />
         </processorPath>
-        <module name="currency-conversion-service.main" />
+        <module name="currency-exchange-service.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="currency-exchange-service.aot" target="17" />
+      <module name="currency-exchange-service.aotTest" target="17" />
+      <module name="naming-server.aot" target="17" />
+      <module name="naming-server.aotTest" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gateway" options="-parameters" />
+      <module name="api-gateway.main" options="-parameters" />
+      <module name="api-gateway.test" options="-parameters" />
       <module name="config-service" options="-parameters" />
       <module name="config-service.main" options="-parameters" />
       <module name="config-service.test" options="-parameters" />
@@ -21,12 +30,16 @@
       <module name="currency-conversion-service.main" options="-parameters" />
       <module name="currency-conversion-service.test" options="-parameters" />
       <module name="currency-exchange-service" options="-parameters" />
+      <module name="currency-exchange-service.aot" options="-parameters" />
+      <module name="currency-exchange-service.aotTest" options="-parameters" />
       <module name="currency-exchange-service.main" options="-parameters" />
       <module name="currency-exchange-service.test" options="-parameters" />
       <module name="limits-service" options="-parameters" />
       <module name="limits-service.main" options="-parameters" />
       <module name="limits-service.test" options="-parameters" />
       <module name="naming-server" options="-parameters" />
+      <module name="naming-server.aot" options="-parameters" />
+      <module name="naming-server.aotTest" options="-parameters" />
       <module name="naming-server.main" options="-parameters" />
       <module name="naming-server.test" options="-parameters" />
     </option>

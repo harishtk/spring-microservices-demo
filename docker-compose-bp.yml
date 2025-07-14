@@ -1,20 +1,26 @@
 services:
   currency-exchange-service:
-    build:
-      context: ./currency-exchange-service
-      dockerfile: Dockerfile
+    image: iopractice/currency-exchange-service:0.0.1-SNAPSHOT
     container_name: currency-exchange-service
     environment:
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://currency-naming-server:9761/eureka
       MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin-server:9411/api/v2/spans
       JAVA_OPTS: >-
-        -Xms256m
-        -Xmx512m
+        -Xms128m
+        -Xmx256m
         -XX:MaxRAM=512M
         -XX:+UseSerialGC
-        -XX:ReservedCodeCacheSize=32M
-        -XX:MaxMetaspaceSize=128M
-        -Xss512k
+        -XX:ReservedCodeCacheSize=24M
+        -XX:MaxMetaspaceSize=96M
+        -XX:MaxDirectMemorySize=8M
+        -Xss256k
+#        -Xms256m
+#        -Xmx512m
+#        -XX:MaxRAM=512M
+#        -XX:+UseSerialGC
+#        -XX:ReservedCodeCacheSize=32M
+#        -XX:MaxMetaspaceSize=128M
+#        -Xss512k
       # Bare minimum footprint
       #        -XX:ReservedCodeCacheSize=40M
       #        -XX:MaxMetaspaceSize=60M
@@ -30,31 +36,37 @@ services:
     cpus: 1.0            # CPU hard limit
     networks:
       currency_network:
-    healthcheck:
-      test: [ "CMD-SHELL", "curl -sf http://localhost:8000/actuator/health | grep UP || exit 1" ]
-      interval: 15s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
+#    healthcheck:
+#      test: [ "CMD-SHELL", "curl -sf http://localhost:8000/actuator/health | grep UP || exit 1" ]
+#      interval: 15s
+#      timeout: 5s
+#      retries: 5
+#      start_period: 20s
     depends_on:
       - currency-naming-server
 
   currency-conversion-service:
-    build:
-      context: ./currency-conversion-service
-      dockerfile: Dockerfile
+    image: iopractice/currency-conversion-service:0.0.1-SNAPSHOT
     container_name: currency-conversion-service
     environment:
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://currency-naming-server:9761/eureka
       MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin-server:9411/api/v2/spans
       JAVA_OPTS: >-
-        -Xms256m
-        -Xmx512m
+        -Xms128m
+        -Xmx256m
         -XX:MaxRAM=512M
         -XX:+UseSerialGC
-        -XX:ReservedCodeCacheSize=32M
-        -XX:MaxMetaspaceSize=128M
-        -Xss512k
+        -XX:ReservedCodeCacheSize=24M
+        -XX:MaxMetaspaceSize=96M
+        -XX:MaxDirectMemorySize=8M
+        -Xss256k
+      #        -Xms256m
+#        -Xmx512m
+#        -XX:MaxRAM=512M
+#        -XX:+UseSerialGC
+#        -XX:ReservedCodeCacheSize=32M
+#        -XX:MaxMetaspaceSize=128M
+#        -Xss512k
       # Bare minimum footprint
       #        -XX:ReservedCodeCacheSize=40M
       #        -XX:MaxMetaspaceSize=60M
@@ -80,19 +92,18 @@ services:
       - currency-naming-server
 
   currency-naming-server:
-    build:
-      context: ./naming-server
-      dockerfile: Dockerfile
+    image: iopractice/currency-naming-server:0.0.1-SNAPSHOT
     container_name: currency-naming-server
     environment:
       JAVA_OPTS: >-
-        -Xms256m
-        -Xmx512m
+        -Xms128m
+        -Xmx256m
         -XX:MaxRAM=512M
         -XX:+UseSerialGC
-        -XX:ReservedCodeCacheSize=32M
-        -XX:MaxMetaspaceSize=128M
-        -Xss512k
+        -XX:ReservedCodeCacheSize=24M
+        -XX:MaxMetaspaceSize=96M
+        -XX:MaxDirectMemorySize=8M
+        -Xss256k
       # Bare minimum footprint
       #        -XX:ReservedCodeCacheSize=40M
       #        -XX:MaxMetaspaceSize=60M
@@ -118,21 +129,20 @@ services:
       - zipkin-server
 
   currency-api-gateway:
-    build:
-      context: ./api-gateway
-      dockerfile: Dockerfile
+    image: iopractice/currency-api-gateway:0.0.1-SNAPSHOT
     container_name: currency-api-gateway
     environment:
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://currency-naming-server:9761/eureka
       MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin-server:9411/api/v2/spans
       JAVA_OPTS: >-
-        -Xms256m
-        -Xmx512m
+        -Xms128m
+        -Xmx256m
         -XX:MaxRAM=512M
         -XX:+UseSerialGC
-        -XX:ReservedCodeCacheSize=32M
-        -XX:MaxMetaspaceSize=128M
-        -Xss512k
+        -XX:ReservedCodeCacheSize=24M
+        -XX:MaxMetaspaceSize=96M
+        -XX:MaxDirectMemorySize=8M
+        -Xss256k
       # Bare minimum footprint
       #        -XX:ReservedCodeCacheSize=40M
       #        -XX:MaxMetaspaceSize=60M

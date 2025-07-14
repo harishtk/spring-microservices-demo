@@ -53,6 +53,9 @@ tasks.named('test') {
 }
 
 bootBuildImage {
+    builder = "paketobuildpacks/builder-jammy-full" // includes health-checker
     imageName = "iopractice/${project.name}:${project.version}"
-    pullPolicy("NEVER")
+    pullPolicy("IF_NOT_PRESENT")
+    publish = false
+    environment["BP_HEALTH_CHECKER_ENABLED"] = "true"
 }

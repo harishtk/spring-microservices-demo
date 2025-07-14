@@ -1,0 +1,29 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="currency-naming-server" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+    <deployment type="dockerfile">
+      <settings>
+        <option name="imageTag" value="currency-naming-server:latest" />
+        <option name="containerName" value="currency-naming-server" />
+        <option name="envVars">
+          <list>
+            <DockerEnvVarImpl>
+              <option name="name" value="JAVA_OPTS" />
+              <option name="value" value="-Xms256m -Xmx512m -XX:MaxRAM=512M -XX:+UseSerialGC -XX:ReservedCodeCacheSize=32M -XX:MaxMetaspaceSize=128M -Xss512k" />
+            </DockerEnvVarImpl>
+          </list>
+        </option>
+        <option name="portBindings">
+          <list>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="8761" />
+              <option name="hostPort" value="8761" />
+            </DockerPortBindingImpl>
+          </list>
+        </option>
+        <option name="commandLineOptions" value="--network currency-network --cpus 0.2 --memory 600m" />
+        <option name="sourceFilePath" value="naming-server/Dockerfile" />
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>

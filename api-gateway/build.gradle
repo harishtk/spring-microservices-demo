@@ -46,6 +46,7 @@ tasks.named('test') {
 }
 
 bootBuildImage {
-	imageName = "iopractice/${project.name}:${project.version}"
-	pullPolicy("NEVER")
+	imageName = "iopractice/currency-${project.name}:${project.version}"
+	pullPolicy("IF_NOT_PRESENT")
+	publish = false
 }

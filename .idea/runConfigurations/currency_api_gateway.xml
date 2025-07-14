@@ -1,0 +1,37 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="currency-api-gateway" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+    <deployment type="dockerfile">
+      <settings>
+        <option name="imageTag" value="currency-api-gateway:latest" />
+        <option name="containerName" value="currency-api-gateway" />
+        <option name="envVars">
+          <list>
+            <DockerEnvVarImpl>
+              <option name="name" value="EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE" />
+              <option name="value" value="http://currency-naming-server:8761/eureka" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="JAVA_OPTS" />
+              <option name="value" value="-Xms256m -Xmx512m -XX:MaxRAM=512M -XX:+UseSerialGC -XX:ReservedCodeCacheSize=32M -XX:MaxMetaspaceSize=128M -Xss512k" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="MANAGEMENT_ZIPKIN_TRACING_ENDPOINT" />
+              <option name="value" value="http://zipkin-server:9411/api/v2/spans" />
+            </DockerEnvVarImpl>
+          </list>
+        </option>
+        <option name="portBindings">
+          <list>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="8765" />
+              <option name="hostPort" value="8765" />
+            </DockerPortBindingImpl>
+          </list>
+        </option>
+        <option name="commandLineOptions" value="--network currency-network --cpus 0.5 --memory 600m" />
+        <option name="sourceFilePath" value="api-gateway/Dockerfile" />
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>

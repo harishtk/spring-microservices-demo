@@ -3,8 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SpringBoot-Microservices-101.iml" filepath="$PROJECT_DIR$/SpringBoot-Microservices-101.iml" />
-      <module fileurl="file://$PROJECT_DIR$/api-gatewy/api-gatewy.iml" filepath="$PROJECT_DIR$/api-gatewy/api-gatewy.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/config-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/currency-conversion-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/currency-conversion-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/currency-exchange-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/currency-exchange-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/limits-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/limits-service.main.iml" />
     </modules>
   </component>
