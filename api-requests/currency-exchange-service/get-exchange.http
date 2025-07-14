@@ -1,0 +1,10 @@
+### GET request to currency-api-gateway
+@from = USD
+@to = INR
+
+GET http://localhost:9765/currency-exchange/from/{{from}}/to/{{to}}
+
+###
+
+### GET request to currency-exchange-service
+GET http://localhost:8000/currency-exchange/from/{{from}}/to/{{to}}

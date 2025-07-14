@@ -1,0 +1,172 @@
+services:
+  currency-exchange-service:
+    build:
+      context: ./currency-exchange-service
+      dockerfile: Dockerfile
+    container_name: currency-exchange-service
+    environment:
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://currency-naming-server:9761/eureka
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin-server:9411/api/v2/spans
+      JAVA_OPTS: >-
+        -Xms256m
+        -Xmx512m
+        -XX:MaxRAM=512M
+        -XX:+UseSerialGC
+        -XX:ReservedCodeCacheSize=32M
+        -XX:MaxMetaspaceSize=128M
+        -Xss512k
+      # Bare minimum footprint
+      #        -XX:ReservedCodeCacheSize=40M
+      #        -XX:MaxMetaspaceSize=60M
+      #        -Xlog:gc*=debug
+      #        -Xms34m
+      #        -Xmx40m
+      #        -Xss256k
+      #        -XX:MaxRAM=150M
+      #        -XX:+PrintFlagsFinal
+    ports:
+      - "8000:8000"
+    mem_limit: 600M      # Total memory hard limit
+    cpus: 1.0            # CPU hard limit
+    networks:
+      currency_network:
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sf http://currency-exchange-service:8000/actuator/health | grep UP || exit 1" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    depends_on:
+      - currency-naming-server
+
+  currency-conversion-service:
+    build:
+      context: ./currency-conversion-service
+      dockerfile: Dockerfile
+    container_name: currency-conversion-service
+    environment:
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://currency-naming-server:9761/eureka
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin-server:9411/api/v2/spans
+      JAVA_OPTS: >-
+        -Xms256m
+        -Xmx512m
+        -XX:MaxRAM=512M
+        -XX:+UseSerialGC
+        -XX:ReservedCodeCacheSize=32M
+        -XX:MaxMetaspaceSize=128M
+        -Xss512k
+      # Bare minimum footprint
+      #        -XX:ReservedCodeCacheSize=40M
+      #        -XX:MaxMetaspaceSize=60M
+      #        -Xlog:gc*=debug
+      #        -Xms34m
+      #        -Xmx40m
+      #        -Xss256k
+      #        -XX:MaxRAM=150M
+      #        -XX:+PrintFlagsFinal
+    ports:
+      - "8100:8100"
+    mem_limit: 600M      # Total memory hard limit
+    cpus: 1.0            # CPU hard limit
+    networks:
+      currency_network:
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sf http://currency-conversion-service:8100/actuator/health | grep UP || exit 1" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    depends_on:
+      - currency-naming-server
+
+  currency-naming-server:
+    build:
+      context: ./naming-server
+      dockerfile: Dockerfile
+    container_name: currency-naming-server
+    environment:
+      JAVA_OPTS: >-
+        -Xms256m
+        -Xmx512m
+        -XX:MaxRAM=512M
+        -XX:+UseSerialGC
+        -XX:ReservedCodeCacheSize=32M
+        -XX:MaxMetaspaceSize=128M
+        -Xss512k
+      # Bare minimum footprint
+      #        -XX:ReservedCodeCacheSize=40M
+      #        -XX:MaxMetaspaceSize=60M
+      #        -Xlog:gc*=debug
+      #        -Xms34m
+      #        -Xmx40m
+      #        -Xss256k
+      #        -XX:MaxRAM=150M
+      #        -XX:+PrintFlagsFinal
+    ports:
+      - "9761:9761"
+    mem_limit: 600M      # Total memory hard limit
+    cpus: 1.0            # CPU hard limit
+    networks:
+      currency_network:
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sf http://currency-naming-server:9761/actuator/health | grep UP || exit 1" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    depends_on:
+      - zipkin-server
+
+  currency-api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: currency-api-gateway
+    environment:
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://currency-naming-server:9761/eureka
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin-server:9411/api/v2/spans
+      JAVA_OPTS: >-
+        -Xms256m
+        -Xmx512m
+        -XX:MaxRAM=512M
+        -XX:+UseSerialGC
+        -XX:ReservedCodeCacheSize=32M
+        -XX:MaxMetaspaceSize=128M
+        -Xss512k
+      # Bare minimum footprint
+      #        -XX:ReservedCodeCacheSize=40M
+      #        -XX:MaxMetaspaceSize=60M
+      #        -Xlog:gc*=debug
+      #        -Xms34m
+      #        -Xmx40m
+      #        -Xss256k
+      #        -XX:MaxRAM=150M
+      #        -XX:+PrintFlagsFinal
+    ports:
+      - "9765:9765"
+    mem_limit: 600M      # Total memory hard limit
+    cpus: 1.0            # CPU hard limit
+    networks:
+      currency_network:
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sf http://currency-api-gateway:9765/actuator/health | grep UP || exit 1" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    depends_on:
+      - currency-naming-server
+
+  zipkin-server:
+    container_name: zipkin-server
+    image: openzipkin/zipkin:2.23
+    mem_limit: 300m
+    ports:
+      - "9411:9411"
+    networks:
+      currency_network:
+
+networks:
+  currency_network:
+    external: true
+    name: currency-network

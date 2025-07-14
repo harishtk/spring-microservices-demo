@@ -1,0 +1,20 @@
+### GET request to currency-conversion
+GET http://localhost:8100/currency-conversion/from/USD/to/INR/quantity/2
+
+###
+
+### GET request to currency-conversion with feign
+GET http://localhost:8100/currency-conversion-feign/from/USD/to/INR/quantity/2
+
+###
+
+### GET request to currency-api-gateway
+@from = USD
+@to = INR
+
+GET http://localhost:9765/currency-conversion/from/{{from}}/to/{{to}}/quantity/2
+###
+
+### GET new request to currency-api-gateway
+GET http://localhost:9765/currency-conversion-new/from/{{from}}/to/{{to}}/quantity/2
+###
